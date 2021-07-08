@@ -36,19 +36,19 @@ export default function App() {
       <Suspense fallback={<p>Loading...</p>}>
         <Switch>
           <PublicRoute exact path="/">
-            {HomeView}
+            <HomeView />
           </PublicRoute>
 
           <PublicRoute path="/register" restricted redirectTo="/contacts">
-            {RegisterView}
+            <RegisterView />
           </PublicRoute>
 
           <PublicRoute path="/login" restricted redirectTo="/contacts">
-            {LoginView}
+            <LoginView />
           </PublicRoute>
 
           <PrivateRoute path="/contacts" redirectTo="/login">
-            {ContactsView}
+            <ContactsView />
           </PrivateRoute>
         </Switch>
       </Suspense>

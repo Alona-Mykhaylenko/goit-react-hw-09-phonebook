@@ -24,7 +24,7 @@ export default function ContactList() {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  const onDelete = (id) => dispatch(deleteContact(id));
+  const onDelete = (contactId) => dispatch(deleteContact(contactId));
 
   const filteredContactsProp = useSelector(getfilteredContactsSelector);
 
@@ -33,7 +33,11 @@ export default function ContactList() {
       {filteredContactsProp.map((contact) => (
         <li key={contact.id} className={styles.li}>
           {contact.name}: {contact.number}
-          <button className={styles.button} type="button" onClick={onDelete}>
+          <button
+            className={styles.button}
+            type="button"
+            onClick={() => onDelete(contact.id)}
+          >
             Delete
           </button>
         </li>

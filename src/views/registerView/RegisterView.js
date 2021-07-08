@@ -7,35 +7,26 @@ import styles from "./registerView.module.css";
 //   onRegister: register,
 // };
 
+const initialState = {
+  name: "",
+  email: "",
+  password: "",
+};
+
 export default function RegisterView() {
   const dispatch = useDispatch();
-  // state = { name: "", email: "", password: "" };
+  const [state, setState] = useState(initialState);
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setState({ ...state, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(register());
-    // this.props.onRegister(this.state);
-
-    setName("");
-    setEmail("");
-    setPassword("");
-
-    // this.setState({ name: "", email: "", password: "" });
+    dispatch(register(state));
+    setState(initialState);
   };
 
   return (
@@ -48,8 +39,8 @@ export default function RegisterView() {
           <input
             type="name"
             name="name"
-            value={name}
-            onChange={handleNameChange}
+            value={state.name}
+            onChange={handleChange}
           />
         </label>
 
@@ -58,8 +49,8 @@ export default function RegisterView() {
           <input
             type="email"
             name="email"
-            value={email}
-            onChange={handleEmailChange}
+            value={state.email}
+            onChange={handleChange}
           />
         </label>
 
@@ -68,8 +59,8 @@ export default function RegisterView() {
           <input
             type="password"
             name="password"
-            value={password}
-            onChange={handlePasswordChange}
+            value={state.password}
+            onChange={handleChange}
           />
         </label>
 

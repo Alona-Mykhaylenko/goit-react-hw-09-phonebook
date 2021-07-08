@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 import { useSelector, useDispatch } from "react-redux";
 import { handleChange } from "../../redux/app-actions";
 import { getFilterSelector } from "../../redux/contacts-selectors";
@@ -30,11 +28,6 @@ export default function Filter() {
     </div>
   );
 }
-
-Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
-};
 
 // import PropTypes from "prop-types";
 

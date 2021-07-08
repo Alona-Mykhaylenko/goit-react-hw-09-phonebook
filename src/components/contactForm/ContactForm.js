@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "./contactForm.module.css";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { addContact } from "../../redux/operations";
 import { getContactsSelector } from "../../redux/contacts-selectors";
@@ -13,43 +12,37 @@ import { getContactsSelector } from "../../redux/contacts-selectors";
 //   addContactProp: (name, number) => dispatch(addContact(name, number)),
 // });
 
+const initialState = {
+  name: "",
+  number: "",
+};
+
 export default function ContactForm() {
   const dispatch = useDispatch();
-
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
-
-  // state = {
-  //   name: "",
-  //   number: "",
-  // };
+  const [state, setState] = useState(initialState);
 
   const contacts = useSelector(getContactsSelector);
 
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const handleNumberChange = (event) => {
-    setNumber(event.target.value);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setState({ ...state, [name]: value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (contacts.find((contact) => contact.name === name)) {
-      alert(`${name} is already in contacts`);
+    if (contacts.find((contact) => contact.name === state.name)) {
+      alert(`${state.name} is already in contacts`);
       return;
     }
-    dispatch(addContact(name, number));
+    dispatch(addContact(state));
 
-    setName("");
-    setNumber("");
+    setState(initialState);
   };
 
   return (
     <div className={styles.formBox}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={() => handleSubmit(state)}>
         <label className={styles.label}>
           Name <br />
           <input
@@ -58,8 +51,8 @@ export default function ContactForm() {
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
             required
-            value={name}
-            onChange={handleNameChange}
+            value={state.name}
+            onChange={handleChange}
             className={styles.formInput}
           />
         </label>{" "}
@@ -71,8 +64,8 @@ export default function ContactForm() {
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
             required
-            value={number}
-            onChange={handleNumberChange}
+            value={state.number}
+            onChange={handleChange}
           />
         </label>
         <button type="submit" className={styles.submitButton}>
@@ -83,19 +76,8 @@ export default function ContactForm() {
   );
 }
 
-ContactForm.propTypes = {
-  addContactProp: PropTypes.func.isRequired,
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
-
 // import React, { Component } from "react";
 // import styles from "./contactForm.module.css";
-// import PropTypes from "prop-types";
 // import { connect } from "react-redux";
 // import { addContact } from "../../redux/operations";
 // import { getContactsSelector } from "../../redux/contacts-selectors";
@@ -172,13 +154,3 @@ ContactForm.propTypes = {
 // });
 
 // export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
-
-// ContactForm.propTypes = {
-//   addContactProp: PropTypes.func.isRequired,
-//   contacts: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       name: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-//     })
-//   ).isRequired,
-// };

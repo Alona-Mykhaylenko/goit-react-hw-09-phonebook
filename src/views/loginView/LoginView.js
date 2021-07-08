@@ -7,28 +7,27 @@ import styles from "./loginView.module.css";
 //   onLogin: logIn,
 // };
 
+const initialState = {
+  email: "",
+  password: "",
+};
+
 export default function LoginView() {
-  // state = { email: "", password: "" };
   const dispatch = useDispatch();
+  const [state, setState] = useState(initialState);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+    setState({ ...state, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(logIn());
+    dispatch(logIn(state));
 
-    setEmail("");
-    setPassword("");
+    setState(initialState);
   };
 
   return (
@@ -41,8 +40,8 @@ export default function LoginView() {
           <input
             type="email"
             name="email"
-            value={email}
-            onChange={handleEmailChange}
+            value={state.email}
+            onChange={handleChange}
           />
         </label>
 
@@ -51,8 +50,8 @@ export default function LoginView() {
           <input
             type="password"
             name="password"
-            value={password}
-            onChange={handlePasswordChange}
+            value={state.password}
+            onChange={handleChange}
           />
         </label>
 
