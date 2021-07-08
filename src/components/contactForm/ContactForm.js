@@ -4,14 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addContact } from "../../redux/operations";
 import { getContactsSelector } from "../../redux/contacts-selectors";
 
-// const mapStateToProps = (state) => ({
-//   contacts: getContactsSelector(state),
-// });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   addContactProp: (name, number) => dispatch(addContact(name, number)),
-// });
-
 const initialState = {
   name: "",
   number: "",
@@ -42,7 +34,7 @@ export default function ContactForm() {
 
   return (
     <div className={styles.formBox}>
-      <form onSubmit={() => handleSubmit(state)}>
+      <form onSubmit={handleSubmit}>
         <label className={styles.label}>
           Name <br />
           <input

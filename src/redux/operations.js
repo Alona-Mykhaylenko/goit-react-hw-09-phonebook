@@ -11,7 +11,6 @@ import {
   fetchContactError,
 } from "./app-actions";
 
-
 const fetchContacts = () => (dispatch) => {
   dispatch(fetchContactRequest());
 
@@ -21,13 +20,11 @@ const fetchContacts = () => (dispatch) => {
     .catch((error) => dispatch(fetchContactError(error.message)));
 };
 
-const addContact = (name, number) => (dispatch) => {
-  const contact = { name, number };
-
+const addContact = (newContact) => (dispatch) => {
   dispatch(addContactRequest());
 
   axios
-    .post("/contacts", contact)
+    .post("/contacts", newContact)
     .then((response) => dispatch(addContactSuccess(response.data)))
     .catch((error) => dispatch(addContactError(error.message)));
 };
